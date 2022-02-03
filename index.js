@@ -18,12 +18,14 @@ async function run() {
     try {
         await client.connect();
         const database = client.db('fly_bd');
-        const serviceCollection = database.collection('services');
-        const service = {
-            name:'hello',
-        }
-        const result = await serviceCollection.insertOne(service);
-        console.log(result)
+        const packagesCollection = database.collection('packages');
+       
+        //GET Products API
+        app.get('/packages', async (req, res) => {
+            const cursor = packagesCollection.find({});
+            const packages = await cursor.toArray();
+            res.send(packages);
+        });
         
     }
 
