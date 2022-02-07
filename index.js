@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require("cors");
 require('dotenv').config()
 const { MongoClient } = require('mongodb');
-// const ObjectId = require('mongodb').ObjectId;
+const ObjectId = require('mongodb').ObjectId;
 
 const app = express();
 const port = process.env.PORT || 5000
@@ -66,9 +66,9 @@ async function run() {
             console.log(result)
         })
 
-        app.post('/products', async (req, res) => {
-            const product = req.body;
-            const result = await productCollection.insertOne(product);
+        app.post('/packages', async (req, res) => {
+            const package = req.body;
+            const result = await packagesCollection.insertOne(package);
             res.json(result);
             console.log(result)
         })
@@ -108,18 +108,18 @@ async function run() {
         })
 
            // DELETE API
-           app.delete('/orders/:id', async (req,res) => {
+           app.delete('/orders/:serviceId', async (req,res) => {
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
             const result = await orderCollection.deleteOne(query);
             console.log('deleting user with id', result);
             res.json(result);
         })
-        app.delete('/products/:id', async (req,res) => {
+        app.delete('/packages/:serviceId', async (req,res) => {
             const id = req.params.id;
             console.log(id)
             const query = {_id: ObjectId(id)};
-            const result = await productCollection.deleteOne(query);
+            const result = await packagesCollection.deleteOne(query);
             console.log('deleting product with id', result);
             res.json(result);
         })
