@@ -106,6 +106,24 @@ async function run() {
           const result = await userCollection.updateOne(filter,updateDoc)
           res.json(result)
         })
+
+           // DELETE API
+           app.delete('/orders/:id', async (req,res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await orderCollection.deleteOne(query);
+            console.log('deleting user with id', result);
+            res.json(result);
+        })
+        app.delete('/products/:id', async (req,res) => {
+            const id = req.params.id;
+            console.log(id)
+            const query = {_id: ObjectId(id)};
+            const result = await productCollection.deleteOne(query);
+            console.log('deleting product with id', result);
+            res.json(result);
+        })
+
     }
 
         finally {
